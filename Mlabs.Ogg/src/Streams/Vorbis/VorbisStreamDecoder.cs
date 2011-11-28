@@ -13,13 +13,25 @@ namespace Mlabs.Ogg.Streams.Vorbis
         {
         }
 
-        public override bool CanDecode(IEnumerable<Page> pages)
+
+        public override bool TryDecode(IEnumerable<Page> pages, out OggStream stream)
         {
+            stream = null;
             var firstPage = pages.FirstOrDefault(p => p.PageType == PageType.BeginningOfStream);
             if (firstPage == null)
                 return false;
 
             byte[] header = Read(firstPage.Segments.First().FileOffset, GetHeaderSize(firstPage));
+            if (!IsVorbisStream(header))
+                return false;
+
+            stream = Decode(pages, header);
+            return true;
+        }
+
+
+        private bool IsVorbisStream(byte[] header)
+        {
             if (!IsProperSize(header))
                 return false;
             if (!IsProperHeaderType(header))
@@ -31,19 +43,17 @@ namespace Mlabs.Ogg.Streams.Vorbis
             return true;
         }
 
-        public override OggStream Decode(IEnumerable<Page> pages)
-        {
-            var firstPage = pages.First(p => p.PageType == PageType.BeginningOfStream);
-            byte[] header = Read(firstPage.Segments.First().FileOffset, GetHeaderSize(firstPage));
 
-            byte audioChannels = header[VorbisHeaderInfo.AudioChannelsIndex];
-            uint audioSampleRate = BitConverter.ToUInt32(header, VorbisHeaderInfo.AudioSampleRateIndex);
-            int maxBitrate = BitConverter.ToInt32(header, VorbisHeaderInfo.MaximumBitrateIndex);
-            int nominalBitrate = BitConverter.ToInt32(header, VorbisHeaderInfo.NominalBitrateIndex);
-            int minBitrate = BitConverter.ToInt32(header, VorbisHeaderInfo.MinimumBitrateIndex);
-            uint blockSize0 = (uint) Math.Pow(2, (header[VorbisHeaderInfo.BlockSizeIndex] & VorbisHeaderInfo.BlockSize0Mask));
-            uint blockSize1 = (uint) Math.Pow(2, header[VorbisHeaderInfo.BlockSizeIndex] >> 4);
-            byte framingFlag = header[VorbisHeaderInfo.FramingFlagIndex];
+        private OggStream Decode(IEnumerable<Page> pages, byte[] identificationHeader)
+        {
+            byte audioChannels = identificationHeader[VorbisHeaderInfo.AudioChannelsIndex];
+            uint audioSampleRate = BitConverter.ToUInt32(identificationHeader, VorbisHeaderInfo.AudioSampleRateIndex);
+            int maxBitrate = BitConverter.ToInt32(identificationHeader, VorbisHeaderInfo.MaximumBitrateIndex);
+            int nominalBitrate = BitConverter.ToInt32(identificationHeader, VorbisHeaderInfo.NominalBitrateIndex);
+            int minBitrate = BitConverter.ToInt32(identificationHeader, VorbisHeaderInfo.MinimumBitrateIndex);
+            uint blockSize0 = (uint) Math.Pow(2, (identificationHeader[VorbisHeaderInfo.BlockSizeIndex] & VorbisHeaderInfo.BlockSize0Mask));
+            uint blockSize1 = (uint) Math.Pow(2, identificationHeader[VorbisHeaderInfo.BlockSizeIndex] >> 4);
+            byte framingFlag = identificationHeader[VorbisHeaderInfo.FramingFlagIndex];
 
             VorbisStream vorbis = new VorbisStream(pages)
                                       {
@@ -60,6 +70,7 @@ namespace Mlabs.Ogg.Streams.Vorbis
             vorbis.Duration = GetDuration(pages, audioSampleRate);
             return vorbis;
         }
+
 
         private TimeSpan GetDuration(IEnumerable<Page> pages, uint audioSampleRate)
         {
@@ -78,17 +89,20 @@ namespace Mlabs.Ogg.Streams.Vorbis
             return version == VorbisHeaderInfo.VorbisVersion;
         }
 
+        
         private bool IsProperSize(byte[] header)
         {
             return header.Length == VorbisHeaderInfo.IdentificatationHeaderSize;
         }
 
+        
         private bool IsProperHeaderType(byte[] header)
         {
             //header must be the identification header
             return header[VorbisHeaderInfo.HeaderTypeIndex] == VorbisHeaderInfo.IdentificartionHeader;
         }
 
+        
         private bool HasMagicSeq(byte[] header)
         {
             string magicSeq = Encoding.ASCII.GetString(header, VorbisHeaderInfo.MagicSeqIndex, VorbisHeaderInfo.MagicSeqSize);
@@ -96,6 +110,7 @@ namespace Mlabs.Ogg.Streams.Vorbis
                 return false;
             return true;
         }
+
 
         private int GetHeaderSize(Page p)
         {

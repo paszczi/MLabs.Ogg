@@ -15,19 +15,12 @@ namespace Mlabs.Ogg.Streams
 
 
         /// <summary>
-        /// Checks whether the specific decoder can decode this stream.
+        /// Tries to decode the stream.
         /// </summary>
         /// <param name="pages">The pages.</param>
+        /// <param name="stream">The stream</param>
         /// <returns></returns>
-        public abstract bool CanDecode(IEnumerable<Page> pages);
-
-
-        /// <summary>
-        /// Decodes given stream info <see cref="OggStream"/>.
-        /// </summary>
-        /// <param name="pages">The pages.</param>
-        /// <returns></returns>
-        public abstract OggStream Decode(IEnumerable<Page> pages);
+        public abstract bool TryDecode(IEnumerable<Page> pages, out OggStream stream);
 
 
         protected byte[] Read(long fileOffset, int size)

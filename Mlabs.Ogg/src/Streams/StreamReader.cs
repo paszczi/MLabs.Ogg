@@ -31,8 +31,9 @@ namespace Mlabs.Ogg.Streams
             if (pages == null) throw new ArgumentNullException("pages");
             foreach (var streamDecoder in m_decoders)
             {
-                if (streamDecoder.CanDecode(pages))
-                    return streamDecoder.Decode(pages);
+                OggStream stream;
+                if (streamDecoder.TryDecode(pages, out stream))
+                    return stream;
             }
 
             //we should never reach this code since the last of the decoders

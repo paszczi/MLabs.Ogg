@@ -13,14 +13,11 @@ namespace Mlabs.Ogg.Streams.Unknown
         {
         }
 
-        public override bool CanDecode(IEnumerable<Page> pages)
-        {
-            return true;
-        }
 
-        public override OggStream Decode(IEnumerable<Page> pages)
+        public override bool TryDecode(IEnumerable<Page> pages, out OggStream stream)
         {
-            return new UnknownStream(pages);
+            stream = new UnknownStream(pages);
+            return true;
         }
     }
 }
