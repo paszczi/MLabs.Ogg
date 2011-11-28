@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Mlabs.Ogg.Metadata;
 using Mlabs.Ogg.Streams.Unknown;
+using Mlabs.Ogg.Streams.Vorbis;
 
 namespace Mlabs.Ogg.Streams
 {
@@ -10,17 +12,26 @@ namespace Mlabs.Ogg.Streams
     /// </summary>
     public class StreamReader
     {
-        private static readonly IList<StreamDecoder> s_decoders = new List<StreamDecoder>
-                                                                      {
-                                                                          new UnknownStreamDecoder(),
-                                                                      };
+        private readonly IList<StreamDecoder> m_decoders;
+
+
+        public StreamReader(Stream stream)
+        {
+            if (stream == null) throw new ArgumentNullException("stream");
+            m_decoders = new List<StreamDecoder>
+                             {
+                                 new VorbisStreamDecoder(stream),
+                                 new UnknownStreamDecoder(stream),
+                             };
+        }
+
 
         public OggStream DecodeStream(IEnumerable<Page> pages)
         {
             if (pages == null) throw new ArgumentNullException("pages");
-            foreach (var streamDecoder in s_decoders)
+            foreach (var streamDecoder in m_decoders)
             {
-                if (streamDecoder.CanDecoded(pages))
+                if (streamDecoder.CanDecode(pages))
                     return streamDecoder.Decode(pages);
             }
 

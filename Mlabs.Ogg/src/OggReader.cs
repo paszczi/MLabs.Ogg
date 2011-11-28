@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using StreamReader = Mlabs.Ogg.Streams.StreamReader;
 
 namespace Mlabs.Ogg
 {
@@ -33,9 +34,10 @@ namespace Mlabs.Ogg
             long originalOffset = m_fileStream.Position;
 
             var p = new PageReader();
+            var sr = new StreamReader(m_fileStream);
             //read pages and break them down to streams
-            var pages = p.ReadPages(m_fileStream).GroupBy(e => e.StreamSerialNumber);
-
+            var pagesByStreamId = p.ReadPages(m_fileStream).GroupBy(e => e.StreamSerialNumber).ToList();
+            var streams = pagesByStreamId.Select(sr.DecodeStream).ToList();
 
             if (m_owns)
             {

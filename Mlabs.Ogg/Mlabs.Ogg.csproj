@@ -55,6 +55,7 @@
     <Compile Include="src\Streams\Unknown\UnknownStream.cs" />
     <Compile Include="src\Streams\Unknown\UnknownStreamDecoder.cs" />
     <Compile Include="src\Streams\Vorbis\VorbisStream.cs" />
+    <Compile Include="src\Streams\Vorbis\VorbisStreamDecoder.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

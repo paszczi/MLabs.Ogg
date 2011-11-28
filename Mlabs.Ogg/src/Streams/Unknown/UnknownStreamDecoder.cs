@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Mlabs.Ogg.Metadata;
 
 namespace Mlabs.Ogg.Streams.Unknown
@@ -8,7 +9,11 @@ namespace Mlabs.Ogg.Streams.Unknown
     /// </summary>
     public class UnknownStreamDecoder : StreamDecoder
     {
-        public override bool CanDecoded(IEnumerable<Page> pages)
+        public UnknownStreamDecoder(Stream stream) : base(stream)
+        {
+        }
+
+        public override bool CanDecode(IEnumerable<Page> pages)
         {
             return true;
         }
