@@ -44,7 +44,7 @@
     <Compile Include="src\Metadata\Page.cs" />
     <Compile Include="src\Metadata\Segment.cs" />
     <Compile Include="src\OggReader.cs" />
-    <Compile Include="src\Metadata\HeaderType.cs" />
+    <Compile Include="src\Metadata\PageType.cs" />
     <Compile Include="src\Metadata\HeaderInfo.cs" />
     <Compile Include="src\PageReader.cs" />
     <Compile Include="src\PrematureEndOfFileException.cs" />
