@@ -18,11 +18,5 @@ namespace Mlabs.Ogg.Streams.Unknown
         {
             get { return StreamType.Unknown; }
         }
-
-
-        public override TimeSpan Duration
-        {
-            get { return TimeSpan.FromHours(0); }
-        }
     }
 }

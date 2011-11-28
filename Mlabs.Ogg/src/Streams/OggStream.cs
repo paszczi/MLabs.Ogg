@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,6 +6,9 @@ using Mlabs.Ogg.Container;
 
 namespace Mlabs.Ogg.Streams
 {
+    /// <summary>
+    /// Generic Ogg stream
+    /// </summary>
     public abstract class OggStream : IEnumerable<Page>
     {
         private readonly IEnumerable<Page> m_pages;
@@ -30,12 +32,6 @@ namespace Mlabs.Ogg.Streams
         public abstract StreamType StreamType { get; }
 
 
-        /// <summary>
-        /// Gets the stream duration.
-        /// </summary>
-        public abstract TimeSpan Duration { get; }
-
-
         public IEnumerator<Page> GetEnumerator()
         {
             return m_pages.GetEnumerator();
@@ -44,6 +40,11 @@ namespace Mlabs.Ogg.Streams
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("SerialNumber: {0}, StreamType: {1}", SerialNumber, StreamType);
         }
     }
 }

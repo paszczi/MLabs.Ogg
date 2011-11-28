@@ -48,7 +48,7 @@ namespace Mlabs.Ogg.Streams.Vorbis
             VorbisStream vorbis = new VorbisStream(pages)
                                       {
                                           AudioChannels = audioChannels,
-                                          AudioSampleRate = audioSampleRate,
+                                          SampleRate = audioSampleRate,
                                           BlockSize0 = blockSize0,
                                           BlockSize1 = blockSize1,
                                           FramingFlag = framingFlag,
@@ -57,7 +57,7 @@ namespace Mlabs.Ogg.Streams.Vorbis
                                           NominalBitrate = nominalBitrate,
                                       };
 
-            TimeSpan duration = GetDuration(pages, audioSampleRate);
+            vorbis.Duration = GetDuration(pages, audioSampleRate);
             return vorbis;
         }
 
