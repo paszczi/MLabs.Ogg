@@ -40,7 +40,7 @@
     <Compile Include="src\Converters.cs" />
     <Compile Include="src\DataConverter.cs" />
     <Compile Include="src\InvalidMagicNumber.cs" />
-    <Compile Include="src\IStreamInfo.cs" />
+    <Compile Include="src\IOggInfo.cs" />
     <Compile Include="src\Metadata\Page.cs" />
     <Compile Include="src\Metadata\Segment.cs" />
     <Compile Include="src\OggReader.cs" />

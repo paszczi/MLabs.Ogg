@@ -1,6 +1,6 @@
 ﻿namespace Mlabs.Ogg
 {
-    public interface IStreamInfo
+    public interface IOggInfo
     {
          
     }
