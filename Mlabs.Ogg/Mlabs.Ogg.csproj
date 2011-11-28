@@ -48,7 +48,7 @@
     <Compile Include="src\OggReader.cs" />
     <Compile Include="src\Container\PageType.cs" />
     <Compile Include="src\Container\HeaderInfo.cs" />
-    <Compile Include="src\PageReader.cs" />
+    <Compile Include="src\Container\PageReader.cs" />
     <Compile Include="src\PrematureEndOfFileException.cs" />
     <Compile Include="src\Streams\MediaStream.cs" />
     <Compile Include="src\Streams\OggStream.cs" />

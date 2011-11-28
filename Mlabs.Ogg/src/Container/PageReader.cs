@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Mlabs.Ogg.Container;
 
-namespace Mlabs.Ogg
+namespace Mlabs.Ogg.Container
 {
     /// <summary>
     /// Reads pages from the Ogg file stream.
