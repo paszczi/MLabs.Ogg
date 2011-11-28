@@ -6,7 +6,7 @@ namespace Mlabs.Ogg.Container
     /// <summary>
     /// Reads the packets out of the pages.
     /// </summary>
-    public class PacketReader
+    internal class PacketReader
     {
         private const byte ExtendedSegmentSize = 255;
 

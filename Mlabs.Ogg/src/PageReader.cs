@@ -7,7 +7,10 @@ using Mlabs.Ogg.Container;
 
 namespace Mlabs.Ogg
 {
-    public class PageReader
+    /// <summary>
+    /// Reads pages from the Ogg file stream.
+    /// </summary>
+    internal class PageReader
     {
         private readonly byte[] m_headerBuffer = new byte[HeaderInfo.HeaderSize];
         private long m_offset;
