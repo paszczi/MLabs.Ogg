@@ -24,14 +24,13 @@ namespace Mlabs.Ogg.Container
             foreach (var page in pages)
             {
                 //if the previous page had unfinished packet, this page must be marked as continuation
-                if (hasPacket)
-                {
-                    if (page.PageType != PageType.Continuation)
-                        throw new ArgumentException();
-                }
+                if (hasPacket && page.PageType != PageType.Continuation)
+                        throw new InvalidStreamException("Packet didn't finish on previous page, but next page is not marked as Continuation");
+                
                 pageIndex++;
                 foreach (var segment in page.Segments)
                 {
+                    //start new packet
                     if (!hasPacket)
                     {
                         fileOffset = segment.FileOffset;
