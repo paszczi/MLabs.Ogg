@@ -8,7 +8,7 @@ namespace Mlabs.Ogg.Streams
     {
         private readonly Stream m_stream;
 
-        protected StreamDecoder (Stream stream)
+        protected StreamDecoder(Stream stream)
         {
             m_stream = stream;
         }
@@ -29,5 +29,14 @@ namespace Mlabs.Ogg.Streams
         /// <returns></returns>
         public abstract OggStream Decode(IEnumerable<Page> pages);
 
+
+        protected byte[] Read(long fileOffset, int size)
+        {
+            byte[] buffer = new byte[size];
+            m_stream.Seek(fileOffset, SeekOrigin.Begin);
+            if (m_stream.Read(buffer, 0, size) != size)
+                throw new IOException("Unable to read " + size + " bytes from the stream");
+            return buffer;
+        }
     }
 }
