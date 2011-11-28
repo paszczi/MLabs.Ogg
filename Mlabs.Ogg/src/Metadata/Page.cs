@@ -11,7 +11,7 @@ namespace Mlabs.Ogg.Metadata
 
         public string MagicString { get; set; }
 
-        public HeaderType HeaderType { get; set; }
+        public PageType PageType { get; set; }
 
         public ulong GranulePosition { get; set; }
 

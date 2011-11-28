@@ -14,10 +14,24 @@ namespace Mlabs.Ogg.Streams.Vorbis
 
         public override bool CanDecode(IEnumerable<Page> pages)
         {
-            var firstPage = pages.FirstOrDefault(p => p.HeaderType == HeaderType.BeginningOfStream);
+            var firstPage = pages.FirstOrDefault(p => p.PageType == PageType.BeginningOfStream);
             if (firstPage == null)
                 return false;
+
+            byte[] header = Read(firstPage.Segments.First().FileOffset, GetHeaderSize(firstPage));
             return false;
+        }
+
+        private int GetHeaderSize (Page p)
+        {
+            int size = 0;
+            foreach (var segment in p.Segments)
+            {
+                size += segment.Size;
+                if (size < 255)
+                    break;
+            }
+            return size;
         }
 
         public override OggStream Decode(IEnumerable<Page> pages)

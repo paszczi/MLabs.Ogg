@@ -73,7 +73,7 @@ namespace Mlabs.Ogg
             if (p.MagicString != HeaderInfo.MagicPatternString)
                 throw new InvalidMagicNumberException(p.MagicString);
 
-            p.HeaderType = (HeaderType) m_headerBuffer[HeaderInfo.HeaderType];
+            p.PageType = (PageType) m_headerBuffer[HeaderInfo.HeaderType];
             p.Version = m_headerBuffer[HeaderInfo.StreamStructureVersion];
             p.GranulePosition = BitConverter.ToUInt64(m_headerBuffer, HeaderInfo.GranulePosition);
             p.StreamSerialNumber = BitConverter.ToUInt32(m_headerBuffer, HeaderInfo.StreamSerialNumber);
