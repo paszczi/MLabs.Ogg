@@ -48,7 +48,12 @@
     <Compile Include="src\Metadata\HeaderInfo.cs" />
     <Compile Include="src\PageReader.cs" />
     <Compile Include="src\PrematureEndOfFileException.cs" />
+    <Compile Include="src\Streams\OggStream.cs" />
+    <Compile Include="src\Streams\StreamType.cs" />
+    <Compile Include="src\Streams\Unknown\UnknownStream.cs" />
+    <Compile Include="src\Streams\Vorbis\VorbisStream.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
