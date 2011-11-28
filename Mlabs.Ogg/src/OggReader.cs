@@ -20,6 +20,9 @@ namespace Mlabs.Ogg
         public OggReader(Stream fileStream)
         {
             if (fileStream == null) throw new ArgumentNullException("fileStream");
+            if (!fileStream.CanSeek) throw new ArgumentException("Stream must be seekable", "fileStream");
+            if (!fileStream.CanRead) throw new ArgumentException("Stream must be readable", "fileStream");
+
             m_fileStream = fileStream;
             m_owns = false;
         }
@@ -32,7 +35,7 @@ namespace Mlabs.Ogg
             var p = new PageReader();
             //read pages and break them down to streams
             var pages = p.ReadPages(m_fileStream).GroupBy(e => e.StreamSerialNumber);
-            
+
 
             if (m_owns)
             {
