@@ -1,7 +1,9 @@
-﻿namespace Mlabs.Ogg
+﻿using System.Collections.Generic;
+using Mlabs.Ogg.Streams;
+
+namespace Mlabs.Ogg
 {
-    public interface IOggInfo
+    public interface IOggInfo : IEnumerable<OggStream>
     {
-         
     }
 }
