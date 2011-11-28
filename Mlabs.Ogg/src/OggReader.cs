@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Mlabs.Ogg.Metadata;
 
 namespace Mlabs.Ogg
 {
@@ -27,12 +25,24 @@ namespace Mlabs.Ogg
         }
 
 
-        public IStreamInfo Read()
+        public IOggInfo Read()
         {
+            long originalOffset = m_fileStream.Position;
+
             var p = new PageReader();
-            var pages = p.ReadPages(m_fileStream).ToList();
+            //read pages and break them down to streams
+            var pages = p.ReadPages(m_fileStream).GroupBy(e => e.StreamSerialNumber);
+            
+
             if (m_owns)
+            {
                 m_fileStream.Dispose();
+            }
+            else
+            {
+                //if we didn't create stream rewind it, so that user won't get any surprise :)
+                m_fileStream.Seek(originalOffset, SeekOrigin.Begin);
+            }
             return null;
         }
     }
