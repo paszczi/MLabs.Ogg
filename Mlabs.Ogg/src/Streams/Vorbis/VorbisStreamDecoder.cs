@@ -31,6 +31,47 @@ namespace Mlabs.Ogg.Streams.Vorbis
             return true;
         }
 
+        public override OggStream Decode(IEnumerable<Page> pages)
+        {
+            var firstPage = pages.First(p => p.PageType == PageType.BeginningOfStream);
+            byte[] header = Read(firstPage.Segments.First().FileOffset, GetHeaderSize(firstPage));
+
+            byte audioChannels = header[VorbisHeaderInfo.AudioChannelsIndex];
+            uint audioSampleRate = BitConverter.ToUInt32(header, VorbisHeaderInfo.AudioSampleRateIndex);
+            int maxBitrate = BitConverter.ToInt32(header, VorbisHeaderInfo.MaximumBitrateIndex);
+            int nominalBitrate = BitConverter.ToInt32(header, VorbisHeaderInfo.NominalBitrateIndex);
+            int minBitrate = BitConverter.ToInt32(header, VorbisHeaderInfo.MinimumBitrateIndex);
+            uint blockSize0 = (uint) Math.Pow(2, (header[VorbisHeaderInfo.BlockSizeIndex] & VorbisHeaderInfo.BlockSize0Mask));
+            uint blockSize1 = (uint) Math.Pow(2, header[VorbisHeaderInfo.BlockSizeIndex] >> 4);
+            byte framingFlag = header[VorbisHeaderInfo.FramingFlagIndex];
+
+            VorbisStream vorbis = new VorbisStream(pages)
+                                      {
+                                          AudioChannels = audioChannels,
+                                          AudioSampleRate = audioSampleRate,
+                                          BlockSize0 = blockSize0,
+                                          BlockSize1 = blockSize1,
+                                          FramingFlag = framingFlag,
+                                          MaxBitrate = maxBitrate,
+                                          MinBitrate = minBitrate,
+                                          NominalBitrate = nominalBitrate,
+                                      };
+
+            TimeSpan duration = GetDuration(pages, audioSampleRate);
+            return vorbis;
+        }
+
+        private TimeSpan GetDuration(IEnumerable<Page> pages, uint audioSampleRate)
+        {
+            var first = pages.FirstOrDefault(p => p.PageType == PageType.BeginningOfStream);
+            var last = pages.LastOrDefault(p => p.PageType == PageType.EndOfStream);
+
+            ulong granuleDelta = last.GranulePosition - first.GranulePosition;
+            double seconds = (double) granuleDelta/audioSampleRate;
+            return TimeSpan.FromSeconds(seconds);
+        }
+
+
         private bool HasProperVersion(byte[] header)
         {
             uint version = BitConverter.ToUInt32(header, VorbisHeaderInfo.VersionIndex);
@@ -66,11 +107,6 @@ namespace Mlabs.Ogg.Streams.Vorbis
                     break;
             }
             return size;
-        }
-
-        public override OggStream Decode(IEnumerable<Page> pages)
-        {
-            throw new NotImplementedException();
         }
     }
 }
