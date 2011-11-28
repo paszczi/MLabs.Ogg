@@ -54,6 +54,7 @@
     <Compile Include="src\Streams\StreamType.cs" />
     <Compile Include="src\Streams\Unknown\UnknownStream.cs" />
     <Compile Include="src\Streams\Unknown\UnknownStreamDecoder.cs" />
+    <Compile Include="src\Streams\Vorbis\VorbisHeaderInfo.cs" />
     <Compile Include="src\Streams\Vorbis\VorbisStream.cs" />
     <Compile Include="src\Streams\Vorbis\VorbisStreamDecoder.cs" />
   </ItemGroup>
