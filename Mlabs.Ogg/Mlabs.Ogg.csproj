@@ -41,11 +41,11 @@
     <Compile Include="src\DataConverter.cs" />
     <Compile Include="src\InvalidMagicNumber.cs" />
     <Compile Include="src\IOggInfo.cs" />
-    <Compile Include="src\Metadata\Page.cs" />
-    <Compile Include="src\Metadata\Segment.cs" />
+    <Compile Include="src\Container\Page.cs" />
+    <Compile Include="src\Container\Segment.cs" />
     <Compile Include="src\OggReader.cs" />
-    <Compile Include="src\Metadata\PageType.cs" />
-    <Compile Include="src\Metadata\HeaderInfo.cs" />
+    <Compile Include="src\Container\PageType.cs" />
+    <Compile Include="src\Container\HeaderInfo.cs" />
     <Compile Include="src\PageReader.cs" />
     <Compile Include="src\PrematureEndOfFileException.cs" />
     <Compile Include="src\Streams\OggStream.cs" />

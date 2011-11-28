@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Mlabs.Ogg.Metadata;
+using Mlabs.Ogg.Container;
 
 namespace Mlabs.Ogg.Streams
 {

@@ -1,4 +1,4 @@
-﻿namespace Mlabs.Ogg.Metadata
+﻿namespace Mlabs.Ogg.Container
 {
     public enum PageType : byte
     {

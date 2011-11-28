@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mlabs.Ogg.Metadata;
+using Mlabs.Ogg.Container;
 
 namespace Mlabs.Ogg.Streams.Unknown
 {

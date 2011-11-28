@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mlabs.Ogg.Metadata
+namespace Mlabs.Ogg.Container
 {
     public class Page
     {

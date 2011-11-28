@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Mlabs.Ogg.Metadata;
+using Mlabs.Ogg.Container;
 using Mlabs.Ogg.Streams.Unknown;
 using Mlabs.Ogg.Streams.Vorbis;
 

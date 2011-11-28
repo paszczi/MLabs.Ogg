@@ -1,5 +1,5 @@
 ﻿using System;
-using Mlabs.Ogg.Metadata;
+using Mlabs.Ogg.Container;
 
 namespace Mlabs.Ogg
 {
