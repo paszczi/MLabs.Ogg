@@ -24,10 +24,22 @@ namespace Mlabs.Ogg.Streams
         public abstract bool TryDecode(IList<Page> pages, IList<Packet> packets, out OggStream stream);
 
 
+        protected Stream FileStream
+        {
+            get { return m_stream; }
+        }
+
+
         protected byte[] Read(long fileOffset, int size)
         {
-            byte[] buffer = new byte[size];
             m_stream.Seek(fileOffset, SeekOrigin.Begin);
+            return ReadNoSeek(size);
+        }
+
+
+        protected byte[] ReadNoSeek(int size)
+        {
+            byte[] buffer = new byte[size];
             if (m_stream.Read(buffer, 0, size) != size)
                 throw new IOException("Unable to read " + size + " bytes from the stream");
             return buffer;

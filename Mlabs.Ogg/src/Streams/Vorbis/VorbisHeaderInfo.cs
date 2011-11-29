@@ -11,8 +11,8 @@
         public const byte IdHeaderType = 1;
 
         //for now only packet_type + macgic seq
-        public const int CommentHeaderSize = -1;
         public const byte CommentHeaderType = 3;
+        public const byte VendorLengthIndex = 7;
 
         public const int SetupHeaderSize = -1;
         public const byte SetupHeaderType = 5;
@@ -24,7 +24,6 @@
         public const string MagicSeq = "vorbis";
 
         public const int VersionIndex = 7;
-        public const uint VorbisVersion = 0;
 
         public const int AudioChannelsIndex = 11;
 

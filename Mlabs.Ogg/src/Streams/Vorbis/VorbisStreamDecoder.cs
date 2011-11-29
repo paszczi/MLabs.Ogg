@@ -63,15 +63,37 @@ namespace Mlabs.Ogg.Streams.Vorbis
         {
             VorbisStream vorbis = new VorbisStream(pages);
             ParseIdHeder(vorbis, packets[IdHeader]);
-
+            ParseCommentHeader(vorbis, packets[CommentHeader]);
             vorbis.Duration = GetDuration(pages, packets, vorbis.SampleRate);
             return vorbis;
+        }
+
+
+        private void ParseCommentHeader(VorbisStream vorbis, Packet packet)
+        {
+            FileStream.Seek(packet.FileOffset + VorbisHeaderInfo.VendorLengthIndex, SeekOrigin.Begin);
+            uint vendorLength = BitConverter.ToUInt32(ReadNoSeek(4), 0);
+            var vendorString = Encoding.UTF8.GetString(ReadNoSeek((int) vendorLength), 0, (int) vendorLength);
+            
+            uint userCommentListLength = BitConverter.ToUInt32(ReadNoSeek(4), 0);
+            IList<string> userComments = new List<string>((int) userCommentListLength);
+            for (uint i = 0; i < userCommentListLength; i++)
+            {
+                uint length = BitConverter.ToUInt32(ReadNoSeek(4), 0);
+                string userComment = Encoding.UTF8.GetString(ReadNoSeek((int) length), 0, (int) length);
+                userComments.Add(userComment);
+            }
+            bool framingFlag = BitConverter.ToBoolean(ReadNoSeek(1), 0);
+            if (!framingFlag)
+                throw new InvalidStreamException("Framing flag at the end of the comment header is not set");
+            vorbis.Comments = new VorbisComments(vendorString, userComments);
         }
 
 
         private void ParseIdHeder(VorbisStream vorbisStream, Packet idHeader)
         {
             byte[] identificationHeader = Read(idHeader.FileOffset, idHeader.Size);
+            byte version = identificationHeader[VorbisHeaderInfo.VersionIndex];
             byte audioChannels = identificationHeader[VorbisHeaderInfo.AudioChannelsIndex];
             uint audioSampleRate = BitConverter.ToUInt32(identificationHeader, VorbisHeaderInfo.AudioSampleRateIndex);
             int maxBitrate = BitConverter.ToInt32(identificationHeader, VorbisHeaderInfo.MaximumBitrateIndex);
@@ -81,6 +103,7 @@ namespace Mlabs.Ogg.Streams.Vorbis
             uint blockSize1 = (uint) Math.Pow(2, identificationHeader[VorbisHeaderInfo.BlockSizeIndex] >> 4);
             byte framingFlag = identificationHeader[VorbisHeaderInfo.FramingFlagIndex];
 
+            vorbisStream.Version = version;
             vorbisStream.AudioChannels = audioChannels;
             vorbisStream.SampleRate = audioSampleRate;
             vorbisStream.BlockSize0 = blockSize0;

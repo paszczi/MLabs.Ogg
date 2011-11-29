@@ -43,6 +43,18 @@ namespace Mlabs.Ogg.Streams.Vorbis
         public byte FramingFlag { get; internal set; }
 
 
+        /// <summary>
+        /// Vorbis stream version.
+        /// </summary>
+        public byte Version { get; internal set; }
+
+
+        /// <summary>
+        /// Vorbis comments.
+        /// </summary>
+        public VorbisComments Comments { get; internal set; }
+
+
         public override string ToString()
         {
             return string.Format("{0}, AudioChannels: {1}, BlockSize0: {2}, BlockSize1: {3}, FramingFlag: {4}", base.ToString(), AudioChannels, BlockSize0, BlockSize1, FramingFlag);
