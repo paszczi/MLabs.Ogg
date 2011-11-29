@@ -17,28 +17,39 @@ namespace Mlabs.Ogg.Streams.Vorbis
         public override bool TryDecode(IList<Page> pages, IList<Packet> packets, out OggStream stream)
         {
             stream = null;
-            var firstPage = pages.FirstOrDefault(p => p.PageType == PageType.BeginningOfStream);
-            if (firstPage == null)
+            //we need a minimum of free packets for id, comment and setup header
+            if (packets.Count < 3)
                 return false;
 
-            byte[] header = Read(firstPage.Segments.First().FileOffset, GetHeaderSize(firstPage));
-            if (!IsVorbisStream(header))
+            if (!IsVorbisStream(packets[0], packets[1], packets[2]))
                 return false;
 
-            stream = Decode(pages, header);
-            return true;
+            //stream = Decode(pages, header);
+            return false;
+        }
+
+        private bool IsVorbisStream(Packet idHeader, Packet commentHeader, Packet setupHeader)
+        {
+            if (idHeader.Size < VorbisHeaderInfo.PacketHeaderSize)
+                return false;
+            if (commentHeader.Size < VorbisHeaderInfo.PacketHeaderSize)
+                return false;
+            if (setupHeader.Size < VorbisHeaderInfo.PacketHeaderSize)
+                return false;
+
+            return IsCorrectHeader(idHeader, VorbisHeaderInfo.IdHeaderType) &&
+                   IsCorrectHeader(commentHeader, VorbisHeaderInfo.CommentHeaderType) &&
+                   IsCorrectHeader(setupHeader, VorbisHeaderInfo.SetupHeaderType);
         }
 
 
-        private bool IsVorbisStream(byte[] header)
+        private bool IsCorrectHeader (Packet headerPacket, byte headerType)
         {
-            if (!IsProperSize(header))
+            byte[] header = Read(headerPacket.FileOffset, VorbisHeaderInfo.PacketHeaderSize);
+            if (header[VorbisHeaderInfo.HeaderTypeIndex] != headerType)
                 return false;
-            if (!IsProperHeaderType(header))
-                return false;
-            if (!HasMagicSeq(header))
-                return false;
-            if (!HasProperVersion(header))
+            string magicSeq = Encoding.ASCII.GetString(header, VorbisHeaderInfo.MagicSeqIndex, VorbisHeaderInfo.MagicSeqSize);
+            if (magicSeq != VorbisHeaderInfo.MagicSeq)
                 return false;
             return true;
         }
@@ -80,48 +91,6 @@ namespace Mlabs.Ogg.Streams.Vorbis
             ulong granuleDelta = last.GranulePosition - first.GranulePosition;
             double seconds = (double) granuleDelta/audioSampleRate;
             return TimeSpan.FromSeconds(seconds);
-        }
-
-
-        private bool HasProperVersion(byte[] header)
-        {
-            uint version = BitConverter.ToUInt32(header, VorbisHeaderInfo.VersionIndex);
-            return version == VorbisHeaderInfo.VorbisVersion;
-        }
-
-        
-        private bool IsProperSize(byte[] header)
-        {
-            return header.Length == VorbisHeaderInfo.IdentificatationHeaderSize;
-        }
-
-        
-        private bool IsProperHeaderType(byte[] header)
-        {
-            //header must be the identification header
-            return header[VorbisHeaderInfo.HeaderTypeIndex] == VorbisHeaderInfo.IdentificartionHeader;
-        }
-
-        
-        private bool HasMagicSeq(byte[] header)
-        {
-            string magicSeq = Encoding.ASCII.GetString(header, VorbisHeaderInfo.MagicSeqIndex, VorbisHeaderInfo.MagicSeqSize);
-            if (magicSeq != VorbisHeaderInfo.MagicSeq)
-                return false;
-            return true;
-        }
-
-
-        private int GetHeaderSize(Page p)
-        {
-            int size = 0;
-            foreach (var segment in p.Segments)
-            {
-                size += segment.Size;
-                if (size < 255)
-                    break;
-            }
-            return size;
         }
     }
 }

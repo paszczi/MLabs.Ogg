@@ -5,9 +5,19 @@
     /// </summary>
     internal class VorbisHeaderInfo
     {
+        
         public const int HeaderTypeIndex = 0;
-        public const int IdentificatationHeaderSize = 30;
-        public const int IdentificartionHeader = 1;
+        public const int IdHeaderSize = 30;
+        public const byte IdHeaderType = 1;
+
+        //for now only packet_type + macgic seq
+        public const int CommentHeaderSize = -1;
+        public const byte CommentHeaderType = 3;
+
+        public const int SetupHeaderSize = -1;
+        public const byte SetupHeaderType = 5;
+
+        public const int PacketHeaderSize = 7;
 
         public const int MagicSeqIndex = 1;
         public const int MagicSeqSize = 6;
