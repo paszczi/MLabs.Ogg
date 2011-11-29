@@ -9,6 +9,10 @@ namespace Mlabs.Ogg.Streams.Vorbis
 {
     public class VorbisStreamDecoder : StreamDecoder
     {
+        private const int IdHeader = 0;
+        private const int CommentHeader = 1;
+        private const int SetupHeader = 2;
+
         public VorbisStreamDecoder(Stream stream) : base(stream)
         {
         }
@@ -24,8 +28,8 @@ namespace Mlabs.Ogg.Streams.Vorbis
             if (!IsVorbisStream(packets[0], packets[1], packets[2]))
                 return false;
 
-            //stream = Decode(pages, header);
-            return false;
+            stream = Decode(pages, packets);
+            return true;
         }
 
         private bool IsVorbisStream(Packet idHeader, Packet commentHeader, Packet setupHeader)
@@ -43,7 +47,7 @@ namespace Mlabs.Ogg.Streams.Vorbis
         }
 
 
-        private bool IsCorrectHeader (Packet headerPacket, byte headerType)
+        private bool IsCorrectHeader(Packet headerPacket, byte headerType)
         {
             byte[] header = Read(headerPacket.FileOffset, VorbisHeaderInfo.PacketHeaderSize);
             if (header[VorbisHeaderInfo.HeaderTypeIndex] != headerType)
@@ -55,8 +59,19 @@ namespace Mlabs.Ogg.Streams.Vorbis
         }
 
 
-        private OggStream Decode(IEnumerable<Page> pages, byte[] identificationHeader)
+        private OggStream Decode(IList<Page> pages, IList<Packet> packets)
         {
+            VorbisStream vorbis = new VorbisStream(pages);
+            ParseIdHeder(vorbis, packets[IdHeader]);
+
+            vorbis.Duration = GetDuration(pages, packets, vorbis.SampleRate);
+            return vorbis;
+        }
+
+
+        private void ParseIdHeder(VorbisStream vorbisStream, Packet idHeader)
+        {
+            byte[] identificationHeader = Read(idHeader.FileOffset, idHeader.Size);
             byte audioChannels = identificationHeader[VorbisHeaderInfo.AudioChannelsIndex];
             uint audioSampleRate = BitConverter.ToUInt32(identificationHeader, VorbisHeaderInfo.AudioSampleRateIndex);
             int maxBitrate = BitConverter.ToInt32(identificationHeader, VorbisHeaderInfo.MaximumBitrateIndex);
@@ -66,26 +81,22 @@ namespace Mlabs.Ogg.Streams.Vorbis
             uint blockSize1 = (uint) Math.Pow(2, identificationHeader[VorbisHeaderInfo.BlockSizeIndex] >> 4);
             byte framingFlag = identificationHeader[VorbisHeaderInfo.FramingFlagIndex];
 
-            VorbisStream vorbis = new VorbisStream(pages)
-                                      {
-                                          AudioChannels = audioChannels,
-                                          SampleRate = audioSampleRate,
-                                          BlockSize0 = blockSize0,
-                                          BlockSize1 = blockSize1,
-                                          FramingFlag = framingFlag,
-                                          MaxBitrate = maxBitrate,
-                                          MinBitrate = minBitrate,
-                                          NominalBitrate = nominalBitrate,
-                                      };
-
-            vorbis.Duration = GetDuration(pages, audioSampleRate);
-            return vorbis;
+            vorbisStream.AudioChannels = audioChannels;
+            vorbisStream.SampleRate = audioSampleRate;
+            vorbisStream.BlockSize0 = blockSize0;
+            vorbisStream.BlockSize1 = blockSize1;
+            vorbisStream.FramingFlag = framingFlag;
+            vorbisStream.MaxBitrate = maxBitrate;
+            vorbisStream.MinBitrate = minBitrate;
+            vorbisStream.NominalBitrate = nominalBitrate;
         }
 
 
-        private TimeSpan GetDuration(IEnumerable<Page> pages, uint audioSampleRate)
+        private TimeSpan GetDuration(IList<Page> pages, IList<Packet> packets, uint audioSampleRate)
         {
-            var first = pages.FirstOrDefault(p => p.PageType == PageType.BeginningOfStream);
+            //this is the first audio packet
+            var packet = packets[SetupHeader + 1];
+            var first = pages[packet.FirstPage];
             var last = pages.LastOrDefault(p => p.PageType == PageType.EndOfStream);
 
             ulong granuleDelta = last.GranulePosition - first.GranulePosition;

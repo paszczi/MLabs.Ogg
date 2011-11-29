@@ -5,7 +5,7 @@
     /// </summary>o
     public class Packet
     {
-        public Packet(long fileOffset, long size, int firstPage, int numberOfSegments)
+        public Packet(long fileOffset, int size, int firstPage, int numberOfSegments)
         {
             FileOffset = fileOffset;
             Size = size;
@@ -22,7 +22,7 @@
         /// <summary>
         /// Gets the size of the packet
         /// </summary>
-        public long Size { get; private set; }
+        public int Size { get; private set; }
 
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace Mlabs.Ogg.Container
             if (pages == null) throw new ArgumentNullException("pages");
 
             long fileOffset = 0;
-            long size = 0;
+            int size = 0;
             int firstPage = 0;
             int pageIndex = 0;
             int numberOfSegments = 0;
