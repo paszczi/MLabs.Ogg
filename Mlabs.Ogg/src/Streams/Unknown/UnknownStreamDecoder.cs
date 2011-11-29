@@ -14,7 +14,7 @@ namespace Mlabs.Ogg.Streams.Unknown
         }
 
 
-        public override bool TryDecode(IEnumerable<Page> pages, out OggStream stream)
+        public override bool TryDecode(IList<Page> pages, IList<Packet> packets, out OggStream stream)
         {
             stream = new UnknownStream(pages);
             return true;

@@ -26,13 +26,13 @@ namespace Mlabs.Ogg.Streams
         }
 
 
-        public OggStream DecodeStream(IEnumerable<Page> pages)
+        public OggStream DecodeStream(IList<Page> pages, IList<Packet> packets)
         {
             if (pages == null) throw new ArgumentNullException("pages");
             foreach (var streamDecoder in m_decoders)
             {
                 OggStream stream;
-                if (streamDecoder.TryDecode(pages, out stream))
+                if (streamDecoder.TryDecode(pages, packets, out stream))
                     return stream;
             }
 

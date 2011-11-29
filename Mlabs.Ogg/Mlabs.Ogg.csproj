@@ -42,6 +42,7 @@
     <Compile Include="src\Converters.cs" />
     <Compile Include="src\DataConverter.cs" />
     <Compile Include="src\InvalidMagicNumber.cs" />
+    <Compile Include="src\InvalidStreamException.cs" />
     <Compile Include="src\IOggInfo.cs" />
     <Compile Include="src\Container\Page.cs" />
     <Compile Include="src\Container\Segment.cs" />

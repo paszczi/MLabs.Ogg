@@ -18,9 +18,10 @@ namespace Mlabs.Ogg.Streams
         /// Tries to decode the stream.
         /// </summary>
         /// <param name="pages">The pages.</param>
-        /// <param name="stream">The stream</param>
+        /// <param name="packets">The packets.</param>
+        /// <param name="stream">The stream.</param>
         /// <returns></returns>
-        public abstract bool TryDecode(IEnumerable<Page> pages, out OggStream stream);
+        public abstract bool TryDecode(IList<Page> pages, IList<Packet> packets, out OggStream stream);
 
 
         protected byte[] Read(long fileOffset, int size)

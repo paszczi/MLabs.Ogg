@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Mlabs.Ogg.Container;
+using Mlabs.Ogg.Streams;
 using StreamReader = Mlabs.Ogg.Streams.StreamReader;
 
 namespace Mlabs.Ogg
@@ -38,12 +40,14 @@ namespace Mlabs.Ogg
             var sr = new StreamReader(m_fileStream);
             var packetReader = new PacketReader();
             //read pages and break them down to streams
-            var pagesByStreamId = p.ReadPages(m_fileStream).GroupBy(e => e.StreamSerialNumber).ToList();
+            var pagesByStreamId = p.ReadPages(m_fileStream).GroupBy(e => e.StreamSerialNumber);
+            IList<OggStream> streams = new List<OggStream>();
             foreach (var pages in pagesByStreamId)
             {
-                var packets = packetReader.ReadPackets(pages).ToList();
+                var materializedPages = pages.ToList();
+                var packets = packetReader.ReadPackets(materializedPages).ToList();
+                streams.Add(sr.DecodeStream(materializedPages, packets));
             }
-            var streams = pagesByStreamId.Select(sr.DecodeStream).ToList();
 
             if (m_owns)
             {

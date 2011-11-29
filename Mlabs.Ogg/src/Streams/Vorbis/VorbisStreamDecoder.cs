@@ -14,7 +14,7 @@ namespace Mlabs.Ogg.Streams.Vorbis
         }
 
 
-        public override bool TryDecode(IEnumerable<Page> pages, out OggStream stream)
+        public override bool TryDecode(IList<Page> pages, IList<Packet> packets, out OggStream stream)
         {
             stream = null;
             var firstPage = pages.FirstOrDefault(p => p.PageType == PageType.BeginningOfStream);
