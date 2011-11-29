@@ -39,8 +39,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Container\Packet.cs" />
     <Compile Include="src\Container\PacketReader.cs" />
-    <Compile Include="src\Converters.cs" />
-    <Compile Include="src\DataConverter.cs" />
     <Compile Include="src\InvalidMagicNumber.cs" />
     <Compile Include="src\InvalidStreamException.cs" />
     <Compile Include="src\IOggInfo.cs" />
