@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLabs.Ogg", "M:abs.Ogg\MLabs.Ogg.csproj", "{617735EF-2DE1-4B64-A6C6-1874A56247B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLabs.Ogg", "MLabs.Ogg\MLabs.Ogg.csproj", "{617735EF-2DE1-4B64-A6C6-1874A56247B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3CEAF3D3-6752-4B7A-B6C2-C303D888DBC3}"
 EndProject

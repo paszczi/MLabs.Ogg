@@ -22,9 +22,9 @@
 //
 
 using System.Collections.Generic;
-using Mlabs.Ogg.Container;
+using MLabs.Ogg.Container;
 
-namespace Mlabs.Ogg.Streams.Unknown
+namespace MLabs.Ogg.Streams.Unknown
 {
     /// <summary>
     /// Stream of unknown stream

@@ -21,7 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mlabs.Ogg.Streams.Vorbis
+namespace MLabs.Ogg.Streams.Vorbis
 {
     /// <summary>
     /// Information needed to read vorbis header

@@ -24,7 +24,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Mlabs.Ogg
+namespace MLabs.Ogg
 {
     [Serializable]
     public class PrematureEndOfFileException : Exception

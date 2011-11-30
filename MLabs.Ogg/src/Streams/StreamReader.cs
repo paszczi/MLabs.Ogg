@@ -24,11 +24,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Mlabs.Ogg.Container;
-using Mlabs.Ogg.Streams.Unknown;
-using Mlabs.Ogg.Streams.Vorbis;
+using MLabs.Ogg.Container;
+using MLabs.Ogg.Streams.Unknown;
+using MLabs.Ogg.Streams.Vorbis;
 
-namespace Mlabs.Ogg.Streams
+namespace MLabs.Ogg.Streams
 {
     /// <summary>
     /// Reads stream from pages and decode it to appropriate <see cref="OggStream"/> instances.

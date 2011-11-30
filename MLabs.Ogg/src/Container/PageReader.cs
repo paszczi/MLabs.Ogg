@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Mlabs.Ogg.Container
+namespace MLabs.Ogg.Container
 {
     /// <summary>
     /// Reads pages from the Ogg file stream.

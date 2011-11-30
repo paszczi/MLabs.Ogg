@@ -23,9 +23,9 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Mlabs.Ogg.Container;
+using MLabs.Ogg.Container;
 
-namespace Mlabs.Ogg.Streams.Unknown
+namespace MLabs.Ogg.Streams.Unknown
 {
     /// <summary>
     /// Decodes unknown stream

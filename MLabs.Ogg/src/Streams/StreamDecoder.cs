@@ -23,9 +23,9 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Mlabs.Ogg.Container;
+using MLabs.Ogg.Container;
 
-namespace Mlabs.Ogg.Streams
+namespace MLabs.Ogg.Streams
 {
     public abstract class StreamDecoder
     {

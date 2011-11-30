@@ -22,9 +22,9 @@
 //
 
 using System;
-using Mlabs.Ogg.Container;
+using MLabs.Ogg.Container;
 
-namespace Mlabs.Ogg
+namespace MLabs.Ogg
 {
     [Serializable]
     public class InvalidMagicNumberException : Exception

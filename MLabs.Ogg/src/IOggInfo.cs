@@ -22,9 +22,9 @@
 //
 
 using System.Collections.Generic;
-using Mlabs.Ogg.Streams;
+using MLabs.Ogg.Streams;
 
-namespace Mlabs.Ogg
+namespace MLabs.Ogg
 {
     public interface IOggInfo : IEnumerable<OggStream>
     {

@@ -23,7 +23,7 @@
 
 using System.Collections.Generic;
 
-namespace Mlabs.Ogg.Container
+namespace MLabs.Ogg.Container
 {
     public class Page
     {

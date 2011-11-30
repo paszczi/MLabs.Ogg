@@ -24,7 +24,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Mlabs.Ogg.Streams.Vorbis
+namespace MLabs.Ogg.Streams.Vorbis
 {
     /// <summary>
     /// Contains comments as specified by Vorbis documentation.

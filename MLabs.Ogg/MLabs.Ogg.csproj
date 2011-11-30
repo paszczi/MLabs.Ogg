@@ -8,8 +8,8 @@
     <ProjectGuid>{617735EF-2DE1-4B64-A6C6-1874A56247B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mlabs.Ogg</RootNamespace>
-    <AssemblyName>Mlabs.Ogg</AssemblyName>
+    <RootNamespace>MLabs.Ogg</RootNamespace>
+    <AssemblyName>MLabs.Ogg</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,4 +1,4 @@
-﻿using Mlabs.Ogg;
+﻿using MLabs.Ogg;
 using NUnit.Framework;
 
 namespace Tests

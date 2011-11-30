@@ -21,7 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mlabs.Ogg.Streams
+namespace MLabs.Ogg.Streams
 {
     public enum StreamType
     {

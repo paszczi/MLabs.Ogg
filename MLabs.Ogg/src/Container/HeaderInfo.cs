@@ -22,7 +22,7 @@
 //
 
 
-namespace Mlabs.Ogg.Container
+namespace MLabs.Ogg.Container
 {
     public static class HeaderInfo
     {

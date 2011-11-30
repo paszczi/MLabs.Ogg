@@ -26,9 +26,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Mlabs.Ogg.Container;
+using MLabs.Ogg.Container;
 
-namespace Mlabs.Ogg.Streams.Vorbis
+namespace MLabs.Ogg.Streams.Vorbis
 {
     public class VorbisStreamDecoder : StreamDecoder
     {

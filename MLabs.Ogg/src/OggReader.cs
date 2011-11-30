@@ -25,11 +25,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Mlabs.Ogg.Container;
-using Mlabs.Ogg.Streams;
-using StreamReader = Mlabs.Ogg.Streams.StreamReader;
+using MLabs.Ogg.Container;
+using MLabs.Ogg.Streams;
+using StreamReader = MLabs.Ogg.Streams.StreamReader;
 
-namespace Mlabs.Ogg
+namespace MLabs.Ogg
 {
     public class OggReader
     {
@@ -60,7 +60,7 @@ namespace Mlabs.Ogg
             long originalOffset = m_fileStream.Position;
 
             var p = new PageReader();
-            var sr = new StreamReader(m_fileStream);
+            var sr = new Streams.StreamReader(m_fileStream);
             var packetReader = new PacketReader();
             //read pages and break them down to streams
             var pagesByStreamId = p.ReadPages(m_fileStream).GroupBy(e => e.StreamSerialNumber);

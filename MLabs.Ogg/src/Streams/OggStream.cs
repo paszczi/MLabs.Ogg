@@ -25,9 +25,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Mlabs.Ogg.Container;
+using MLabs.Ogg.Container;
 
-namespace Mlabs.Ogg.Streams
+namespace MLabs.Ogg.Streams
 {
     /// <summary>
     /// Generic Ogg stream

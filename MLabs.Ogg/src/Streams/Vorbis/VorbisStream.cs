@@ -22,9 +22,9 @@
 //
 
 using System.Collections.Generic;
-using Mlabs.Ogg.Container;
+using MLabs.Ogg.Container;
 
-namespace Mlabs.Ogg.Streams.Vorbis
+namespace MLabs.Ogg.Streams.Vorbis
 {
     /// <summary>
     /// Vorbis audio stream

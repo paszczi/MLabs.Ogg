@@ -24,7 +24,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mlabs.Ogg.Container
+namespace MLabs.Ogg.Container
 {
     /// <summary>
     /// Reads the packets out of the pages.
