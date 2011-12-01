@@ -143,7 +143,12 @@ namespace MLabs.Ogg.Streams.Vorbis
             //this is the first audio packet
             var packet = packets[SetupHeader + 1];
             var first = pages[packet.FirstPage];
-            var last = pages.LastOrDefault(p => p.PageType == PageType.EndOfStream);
+            var last = pages.Last ();
+
+            if (first.PageType != PageType.BeginningOfStream)
+                throw new InvalidStreamException("First page of the stream is not marked as a BOS page, stream is corrupted");
+            if (last.PageType != PageType.EndOfStream)
+                throw new InvalidStreamException("Last page of the stream is not marked as am EOS page, stream is corrupted");
 
             ulong granuleDelta = last.GranulePosition - first.GranulePosition;
             double seconds = (double) granuleDelta/audioSampleRate;
