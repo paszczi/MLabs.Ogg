@@ -50,7 +50,6 @@ namespace MLabs.Ogg.Container
                 if (hasPacket && page.PageType != PageType.Continuation)
                         throw new InvalidStreamException("Packet didn't finish on previous page, but next page is not marked as Continuation");
                 
-                pageIndex++;
                 foreach (var segment in page.Segments)
                 {
                     //start new packet
@@ -75,6 +74,7 @@ namespace MLabs.Ogg.Container
                     hasPacket = false;
                     numberOfSegments = 0;
                 }
+                pageIndex++;
             }
             yield break;
         }
