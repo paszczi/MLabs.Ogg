@@ -26,7 +26,7 @@ using MLabs.Ogg.Streams;
 
 namespace MLabs.Ogg
 {
-    public interface IOggInfo : IEnumerable<OggStream>
+    public interface IOggData : IEnumerable<OggStream>
     {
     }
 }

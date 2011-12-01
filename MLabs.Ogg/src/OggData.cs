@@ -21,53 +21,38 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using MLabs.Ogg.Container;
+using MLabs.Ogg.Streams;
 
-namespace MLabs.Ogg.Streams
+namespace MLabs.Ogg
 {
-    /// <summary>
-    /// Generic Ogg Stream
-    /// </summary>
-    public abstract class OggStream : IEnumerable<Page>
+    public class OggData : IOggData
     {
-        private readonly IEnumerable<Page> m_pages;
-
-        protected OggStream(IEnumerable<Page> pages)
-        {
-            m_pages = new ReadOnlyCollection<Page>(pages.ToList());
-            SerialNumber = m_pages.First().StreamSerialNumber;
-        }
+        private readonly IEnumerable<OggStream> m_streams;
 
 
         /// <summary>
-        /// Gets the stream serial number.
+        /// Initializes a new instance of the <see cref="OggData"/> class.
         /// </summary>
-        public uint SerialNumber { get; protected set; }
-
-
-        /// <summary>
-        /// Gets the stream type.
-        /// </summary>
-        public abstract StreamType StreamType { get; }
-
-
-        public IEnumerator<Page> GetEnumerator()
+        /// <param name="streams">The streams.</param>
+        public OggData (IEnumerable<OggStream> streams)
         {
-            return m_pages.GetEnumerator();
+            if (streams == null) throw new ArgumentNullException ("streams");
+            m_streams = streams;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+
+        public IEnumerator<OggStream> GetEnumerator ()
         {
-            return GetEnumerator();
+            return m_streams.GetEnumerator ();
         }
 
-        public override string ToString()
+
+        IEnumerator IEnumerable.GetEnumerator ()
         {
-            return string.Format("SerialNumber: {0}, StreamType: {1}", SerialNumber, StreamType);
+            return GetEnumerator ();
         }
     }
 }

@@ -41,7 +41,7 @@
     <Compile Include="src\Container\PacketReader.cs" />
     <Compile Include="src\InvalidMagicNumber.cs" />
     <Compile Include="src\InvalidStreamException.cs" />
-    <Compile Include="src\IOggInfo.cs" />
+    <Compile Include="src\IOggData.cs" />
     <Compile Include="src\Container\Page.cs" />
     <Compile Include="src\Container\Segment.cs" />
     <Compile Include="src\OggReader.cs" />
