@@ -32,7 +32,7 @@ namespace MLabs.Ogg.Streams
     /// </summary>
     public abstract class MediaStream : OggStream
     {
-        protected MediaStream(IEnumerable<Page> pages) : base(pages)
+        protected MediaStream (IEnumerable<Page> pages, IEnumerable<Packet> packets) : base (pages, packets)
         {
         }
 

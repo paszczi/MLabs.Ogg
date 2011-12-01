@@ -44,6 +44,7 @@
     <Compile Include="src\IOggData.cs" />
     <Compile Include="src\Container\Page.cs" />
     <Compile Include="src\Container\Segment.cs" />
+    <Compile Include="src\OggData.cs" />
     <Compile Include="src\OggReader.cs" />
     <Compile Include="src\Container\PageType.cs" />
     <Compile Include="src\Container\HeaderInfo.cs" />

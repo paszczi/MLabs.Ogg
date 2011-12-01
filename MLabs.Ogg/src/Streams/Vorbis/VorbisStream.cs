@@ -31,7 +31,7 @@ namespace MLabs.Ogg.Streams.Vorbis
     /// </summary>
     public class VorbisStream : MediaStream
     {
-        public VorbisStream(IEnumerable<Page> pages) : base(pages)
+        public VorbisStream (IEnumerable<Page> pages, IEnumerable<Packet> packets) : base (pages, packets)
         {
         }
 

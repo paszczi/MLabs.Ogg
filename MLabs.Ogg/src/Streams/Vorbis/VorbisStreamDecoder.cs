@@ -84,7 +84,7 @@ namespace MLabs.Ogg.Streams.Vorbis
 
         private OggStream Decode(IList<Page> pages, IList<Packet> packets)
         {
-            VorbisStream vorbis = new VorbisStream(pages);
+            VorbisStream vorbis = new VorbisStream(pages, packets);
             ParseIdHeder(vorbis, packets[IdHeader]);
             ParseCommentHeader(vorbis, packets[CommentHeader]);
             vorbis.Duration = GetDuration(pages, packets, vorbis.SampleRate);

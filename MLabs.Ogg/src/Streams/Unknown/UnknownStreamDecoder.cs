@@ -39,7 +39,7 @@ namespace MLabs.Ogg.Streams.Unknown
 
         public override bool TryDecode(IList<Page> pages, IList<Packet> packets, out OggStream stream)
         {
-            stream = new UnknownStream(pages);
+            stream = new UnknownStream(pages, packets);
             return true;
         }
     }

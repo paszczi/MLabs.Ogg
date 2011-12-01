@@ -31,7 +31,7 @@ namespace MLabs.Ogg.Streams.Unknown
     /// </summary>
     public class UnknownStream : OggStream
     {
-        public UnknownStream(IEnumerable<Page> pages) : base(pages)
+        public UnknownStream (IEnumerable<Page> pages, IEnumerable<Packet> packets) : base (pages, packets)
         {
         }
 

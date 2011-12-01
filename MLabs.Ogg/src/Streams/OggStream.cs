@@ -21,6 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,13 +33,17 @@ namespace MLabs.Ogg.Streams
     /// <summary>
     /// Generic Ogg Stream
     /// </summary>
-    public abstract class OggStream : IEnumerable<Page>
+    public abstract class OggStream
     {
+        private readonly IEnumerable<Packet> m_packets;
         private readonly IEnumerable<Page> m_pages;
 
-        protected OggStream(IEnumerable<Page> pages)
+        protected OggStream(IEnumerable<Page> pages, IEnumerable<Packet> packets)
         {
-            m_pages = new ReadOnlyCollection<Page>(pages.ToList());
+            if (packets == null) throw new ArgumentNullException ("packets");
+            Pages = new ReadOnlyCollection<Page>(pages.ToList());
+            Packets = new ReadOnlyCollection<Packet> (packets.ToList ());
+            
             SerialNumber = m_pages.First().StreamSerialNumber;
         }
 
@@ -54,20 +59,24 @@ namespace MLabs.Ogg.Streams
         /// </summary>
         public abstract StreamType StreamType { get; }
 
+        
+        /// <summary>
+        /// Gets the pages of the stream.
+        /// </summary>
+        /// <value>The pages.</value>
+        public IList<Page> Pages { get; private set; }
 
-        public IEnumerator<Page> GetEnumerator()
-        {
-            return m_pages.GetEnumerator();
-        }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        /// <summary>
+        /// Gets the packets read from the <see cref="Pages"/>.
+        /// </summary>
+        /// <value>The packets.</value>
+        protected IList<Packet> Packets { get; private set; }
+
 
         public override string ToString()
         {
-            return string.Format("SerialNumber: {0}, StreamType: {1}", SerialNumber, StreamType);
+            return string.Format("SerialNumber: {0}, StreamType: {1}, Pages#: {2}, Packets#: {3}", SerialNumber, StreamType, Pages, Packets);
         }
     }
 }
