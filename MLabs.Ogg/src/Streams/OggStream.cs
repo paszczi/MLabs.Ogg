@@ -35,16 +35,13 @@ namespace MLabs.Ogg.Streams
     /// </summary>
     public abstract class OggStream
     {
-        private readonly IEnumerable<Packet> m_packets;
-        private readonly IEnumerable<Page> m_pages;
-
         protected OggStream(IEnumerable<Page> pages, IEnumerable<Packet> packets)
         {
             if (packets == null) throw new ArgumentNullException ("packets");
             Pages = new ReadOnlyCollection<Page>(pages.ToList());
             Packets = new ReadOnlyCollection<Packet> (packets.ToList ());
             
-            SerialNumber = m_pages.First().StreamSerialNumber;
+            SerialNumber = Pages.First().StreamSerialNumber;
         }
 
 
